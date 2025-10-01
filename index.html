@@ -7,36 +7,88 @@
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { box-sizing: border-box; font-family: 'Prompt', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #ddd6fe 100%); }
-        .card-shadow { box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1); }
-        .btn-primary { background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); transition: all 0.3s ease; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3); }
-        .activity-card { transition: all 0.3s ease; border-left: 4px solid #8b5cf6; }
-        .activity-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139, 92, 246, 0.15); }
-        .signature-pad { border: 2px dashed #c4b5fd; border-radius: 12px; background: #faf5ff; }
-        .rubric-item { background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 8px; border: 1px solid #e9d5ff; }
-        .nav-tab { transition: all 0.3s ease; border-radius: 20px; }
-        .nav-tab.active { background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); color: white; transform: scale(1.05); }
-        .stats-card { background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%); border: 1px solid #e9d5ff; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-in { animation: fadeIn 0.5s ease-out; }
-        .mobile-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
-        .mobile-menu.open { transform: translateX(0); }
-        #loadingOverlay { transition: opacity 0.3s ease; }
+        body {
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #ddd6fe 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+        
+        .activity-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #8b5cf6;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.15);
+        }
+        
+        .signature-pad {
+            border: 2px dashed #c4b5fd;
+            border-radius: 12px;
+            background: #faf5ff;
+        }
+        
+        .rubric-item {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border-radius: 8px;
+            border: 1px solid #e9d5ff;
+        }
+        
+        .nav-tab {
+            transition: all 0.3s ease;
+            border-radius: 20px;
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+            border: 1px solid #e9d5ff;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body class="gradient-bg min-h-screen">
-    <div id="loadingOverlay" class="fixed inset-0 bg-white/80 backdrop-blur-sm z-[100] flex items-center justify-center hidden">
-        <div class="text-center">
-            <svg class="animate-spin h-10 w-10 text-purple-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <p id="loadingText" class="mt-4 text-purple-700 font-semibold">กำลังโหลดข้อมูล...</p>
-        </div>
-    </div>
-
+    <!-- Header -->
     <header class="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
@@ -49,25 +101,24 @@
                         <p class="text-sm text-purple-600">บล็อกคอร์ส ม.1-ม.3</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-2">
-                     <button id="syncButton" onclick="syncDataToSheet()" class="md:flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-lg hover:bg-green-200 transition-colors">
-                        <svg id="syncIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M20 4l-5 5M4 20l5-5"></path></svg>
-                        <span id="syncButtonText">Sync ข้อมูล</span>
-                    </button>
-                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-purple-100 text-purple-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                    </button>
-                </div>
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-purple-100 text-purple-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- Mobile Menu -->
     <div id="mobileMenu" class="mobile-menu fixed inset-y-0 left-0 w-64 bg-white shadow-xl z-40 md:hidden">
         <div class="p-4">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-lg font-semibold text-gray-800">เมนู</h2>
                 <button id="closeMobileMenu" class="p-2 rounded-lg bg-gray-100 text-gray-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
                 </button>
             </div>
             <nav class="space-y-2">
@@ -78,15 +129,26 @@
             </nav>
         </div>
     </div>
-    
+
+    <!-- Main Content -->
     <div class="container mx-auto px-4 py-6">
+        <!-- Navigation Tabs -->
         <div class="hidden md:flex bg-white/60 backdrop-blur-md rounded-2xl p-2 mb-6 card-shadow">
-            <button onclick="showTab('dashboard')" class="nav-tab px-6 py-3 text-sm font-medium text-gray-600 hover:text-purple-600 flex items-center space-x-2"><span>📊</span><span>แดชบอร์ด</span></button>
-            <button onclick="showTab('schedule')" class="nav-tab px-6 py-3 text-sm font-medium text-gray-600 hover:text-purple-600 flex items-center space-x-2 active"><span>📅</span><span>ตารางกิจกรรม</span></button>
-            <button onclick="showTab('students')" class="nav-tab px-6 py-3 text-sm font-medium text-gray-600 hover:text-purple-600 flex items-center space-x-2"><span>👥</span><span>จัดการลูกเสือ</span></button>
-            <button onclick="showTab('records')" class="nav-tab px-6 py-3 text-sm font-medium text-gray-600 hover:text-purple-600 flex items-center space-x-2"><span>📝</span><span>บันทึกกิจกรรม</span></button>
+            <button onclick="showTab('dashboard')" class="nav-tab px-6 py-3 text-sm font-medium text-gray-600 hover:text-purple-600 flex items-center space-x-2">
+                <span>📊</span><span>แดชบอร์ด</span>
+            </button>
+            <button onclick="showTab('schedule')" class="nav-tab px-6 py-3 text-sm font-medium text-gray-600 hover:text-purple-600 flex items-center space-x-2 active">
+                <span>📅</span><span>ตารางกิจกรรม</span>
+            </button>
+            <button onclick="showTab('students')" class="nav-tab px-6 py-3 text-sm font-medium text-gray-600 hover:text-purple-600 flex items-center space-x-2">
+                <span>👥</span><span>จัดการลูกเสือ</span>
+            </button>
+            <button onclick="showTab('records')" class="nav-tab px-6 py-3 text-sm font-medium text-gray-600 hover:text-purple-600 flex items-center space-x-2">
+                <span>📝</span><span>บันทึกกิจกรรม</span>
+            </button>
         </div>
 
+        <!-- Dashboard Tab -->
         <div id="dashboardTab" class="tab-content hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <div class="stats-card rounded-2xl p-6 card-shadow">
@@ -95,25 +157,31 @@
                             <p class="text-sm text-gray-600">ลูกเสือทั้งหมด</p>
                             <p class="text-2xl font-bold text-purple-600" id="totalStudents">0</p>
                         </div>
-                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center"><span class="text-purple-600 text-xl">👥</span></div>
-                    </div>
-                </div>
-                <div class="stats-card rounded-2xl p-6 card-shadow">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-600">กิจกรรมที่บันทึก</p>
-                            <p class="text-2xl font-bold text-green-600" id="todayActivities">0</p>
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <span class="text-purple-600 text-xl">👥</span>
                         </div>
-                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"><span class="text-green-600 text-xl">📝</span></div>
                     </div>
                 </div>
                 <div class="stats-card rounded-2xl p-6 card-shadow">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm text-gray-600">รายการบันทึก</p>
+                            <p class="text-sm text-gray-600">กิจกรรมวันนี้</p>
+                            <p class="text-2xl font-bold text-green-600" id="todayActivities">8</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <span class="text-green-600 text-xl">📅</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-card rounded-2xl p-6 card-shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600">เข้าร่วมวันนี้</p>
                             <p class="text-2xl font-bold text-blue-600" id="todayAttendance">0</p>
                         </div>
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center"><span class="text-blue-600 text-xl">✅</span></div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span class="text-blue-600 text-xl">✅</span>
+                        </div>
                     </div>
                 </div>
                 <div class="stats-card rounded-2xl p-6 card-shadow">
@@ -122,33 +190,44 @@
                             <p class="text-sm text-gray-600">คะแนนเฉลี่ย</p>
                             <p class="text-2xl font-bold text-orange-600" id="averageScore">0</p>
                         </div>
-                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center"><span class="text-orange-600 text-xl">⭐</span></div>
+                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                            <span class="text-orange-600 text-xl">⭐</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Charts Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 card-shadow">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center"><span class="mr-2">📊</span>สถิติการเข้าร่วมรายวัน</h3>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">📊</span>สถิติการเข้าร่วมรายวัน
+                    </h3>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-600">วันที่ 1</span>
                             <div class="flex items-center space-x-2">
-                                <div class="w-32 bg-gray-200 rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width: 85%"></div></div>
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
                                 <span class="text-sm font-medium text-gray-700">85%</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-600">วันที่ 2</span>
                             <div class="flex items-center space-x-2">
-                                <div class="w-32 bg-gray-200 rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width: 92%"></div></div>
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
                                 <span class="text-sm font-medium text-gray-700">92%</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-600">วันที่ 3</span>
                             <div class="flex items-center space-x-2">
-                                <div class="w-32 bg-gray-200 rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width: 78%"></div></div>
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 78%"></div>
+                                </div>
                                 <span class="text-sm font-medium text-gray-700">78%</span>
                             </div>
                         </div>
@@ -156,26 +235,34 @@
                 </div>
 
                 <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 card-shadow">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center"><span class="mr-2">🎯</span>สถิติตามระดับชั้น</h3>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <span class="mr-2">🎯</span>สถิติตามระดับชั้น
+                    </h3>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-600">ม.1</span>
                             <div class="flex items-center space-x-2">
-                                <div class="w-32 bg-gray-200 rounded-full h-2"><div class="bg-green-500 h-2 rounded-full" style="width: 88%"></div></div>
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 88%"></div>
+                                </div>
                                 <span class="text-sm font-medium text-gray-700" id="m1Stats">0 คน</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-600">ม.2</span>
                             <div class="flex items-center space-x-2">
-                                <div class="w-32 bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 75%"></div></div>
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 75%"></div>
+                                </div>
                                 <span class="text-sm font-medium text-gray-700" id="m2Stats">0 คน</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-600">ม.3</span>
                             <div class="flex items-center space-x-2">
-                                <div class="w-32 bg-gray-200 rounded-full h-2"><div class="bg-orange-500 h-2 rounded-full" style="width: 82%"></div></div>
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-orange-500 h-2 rounded-full" style="width: 82%"></div>
+                                </div>
                                 <span class="text-sm font-medium text-gray-700" id="m3Stats">0 คน</span>
                             </div>
                         </div>
@@ -184,41 +271,86 @@
             </div>
         </div>
 
+        <!-- Schedule Tab -->
         <div id="scheduleTab" class="tab-content">
+            <!-- Grade Level Selector -->
             <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 mb-6 card-shadow">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-2">🎯</span>เลือกระดับชั้น</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="mr-2">🎯</span>เลือกระดับชั้น
+                </h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <button onclick="showGradeSchedule('m1')" class="grade-btn bg-gradient-to-r from-green-400 to-green-500 text-white p-4 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105"><div class="text-center"><div class="text-2xl mb-2">🌱</div><h3 class="font-semibold">ม.1</h3><p class="text-sm opacity-90">พื้นฐานและการปรับตัว</p></div></button>
-                    <button onclick="showGradeSchedule('m2')" class="grade-btn bg-gradient-to-r from-blue-400 to-blue-500 text-white p-4 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-105"><div class="text-center"><div class="text-2xl mb-2">🚀</div><h3 class="font-semibold">ม.2</h3><p class="text-sm opacity-90">การประยุกต์ใช้และความรับผิดชอบ</p></div></button>
-                    <button onclick="showGradeSchedule('m3')" class="grade-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white p-4 rounded-xl hover:from-orange-500 hover:to-orange-600 transition-all duration-300 transform hover:scale-105"><div class="text-center"><div class="text-2xl mb-2">👑</div><h3 class="font-semibold">ม.3</h3><p class="text-sm opacity-90">ความเป็นผู้นำและการเอาตัวรอด</p></div></button>
+                    <button onclick="showGradeSchedule('m1')" class="grade-btn bg-gradient-to-r from-green-400 to-green-500 text-white p-4 rounded-xl hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105">
+                        <div class="text-center">
+                            <div class="text-2xl mb-2">🌱</div>
+                            <h3 class="font-semibold">ม.1</h3>
+                            <p class="text-sm opacity-90">พื้นฐานและการปรับตัว</p>
+                        </div>
+                    </button>
+                    <button onclick="showGradeSchedule('m2')" class="grade-btn bg-gradient-to-r from-blue-400 to-blue-500 text-white p-4 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-105">
+                        <div class="text-center">
+                            <div class="text-2xl mb-2">🚀</div>
+                            <h3 class="font-semibold">ม.2</h3>
+                            <p class="text-sm opacity-90">การประยุกต์ใช้และความรับผิดชอบ</p>
+                        </div>
+                    </button>
+                    <button onclick="showGradeSchedule('m3')" class="grade-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white p-4 rounded-xl hover:from-orange-500 hover:to-orange-600 transition-all duration-300 transform hover:scale-105">
+                        <div class="text-center">
+                            <div class="text-2xl mb-2">👑</div>
+                            <h3 class="font-semibold">ม.3</h3>
+                            <p class="text-sm opacity-90">ความเป็นผู้นำและการเอาตัวรอด</p>
+                        </div>
+                    </button>
                 </div>
             </div>
+
+            <!-- Schedule Content -->
             <div id="scheduleContent" class="bg-white/80 backdrop-blur-md rounded-2xl p-6 card-shadow">
                 <p class="text-center text-gray-500 py-8">กรุณาเลือกระดับชั้นเพื่อดูตารางกิจกรรม</p>
             </div>
         </div>
 
+        <!-- Students Management Tab -->
         <div id="studentsTab" class="tab-content hidden">
             <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 card-shadow">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-4 md:mb-0 flex items-center"><span class="mr-2">👥</span>จัดการลูกเสือ</h2>
-                    <button onclick="showAddStudentModal()" class="btn-primary text-white px-6 py-3 rounded-xl font-medium flex items-center space-x-2"><span>➕</span><span>เพิ่มลูกเสือ</span></button>
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 md:mb-0 flex items-center">
+                        <span class="mr-2">👥</span>จัดการลูกเสือ
+                    </h2>
+                    <button onclick="showAddStudentModal()" class="btn-primary text-white px-6 py-3 rounded-xl font-medium flex items-center space-x-2">
+                        <span>➕</span><span>เพิ่มลูกเสือ</span>
+                    </button>
                 </div>
+
+                <!-- Grade and Group Selector -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <select id="gradeFilter" class="p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">เลือกระดับชั้น</option><option value="m1">ม.1</option><option value="m2">ม.2</option><option value="m3">ม.3</option>
+                        <option value="">เลือกระดับชั้น</option>
+                        <option value="m1">ม.1</option>
+                        <option value="m2">ม.2</option>
+                        <option value="m3">ม.3</option>
                     </select>
                     <select id="groupFilter" class="p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">เลือกกอง</option><option value="1">กอง 1</option><option value="2">กอง 2</option><option value="3">กอง 3</option><option value="4">กอง 4</option>
+                        <option value="">เลือกกอง</option>
+                        <option value="1">กอง 1</option>
+                        <option value="2">กอง 2</option>
+                        <option value="3">กอง 3</option>
+                        <option value="4">กอง 4</option>
                     </select>
                 </div>
-                <div id="studentsList" class="space-y-4"></div>
+
+                <!-- Students List -->
+                <div id="studentsList" class="space-y-4">
+                    <!-- Students will be populated here -->
+                </div>
             </div>
         </div>
 
+        <!-- Records Tab -->
         <div id="recordsTab" class="tab-content hidden">
             <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 card-shadow">
-                <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center"><span class="mr-2">📝</span>บันทึกกิจกรรม</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="mr-2">📝</span>บันทึกกิจกรรม
+                </h2>
                 <div id="recordsList" class="space-y-4">
                     <p class="text-center text-gray-500 py-8">ยังไม่มีการบันทึกกิจกรรม</p>
                 </div>
@@ -226,240 +358,382 @@
         </div>
     </div>
 
+    <!-- Add Student Modal -->
     <div id="addStudentModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 w-full max-w-md card-shadow">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-gray-800">เพิ่มลูกเสือใหม่</h3>
-                <button onclick="closeAddStudentModal()" class="p-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <button onclick="closeAddStudentModal()" class="p-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
             <form id="addStudentForm" class="space-y-4">
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">ชื่อ-นามสกุล</label><input type="text" id="studentName" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent" required></div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">ระดับชั้น</label><select id="studentGrade" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent" required><option value="">เลือกระดับชั้น</option><option value="m1">ม.1</option><option value="m2">ม.2</option><option value="m3">ม.3</option></select></div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">กอง</label><select id="studentGroup" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent" required><option value="">เลือกกอง</option><option value="1">กอง 1</option><option value="2">กอง 2</option><option value="3">กอง 3</option><option value="4">กอง 4</option></select></div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">หมู่</label><select id="studentUnit" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent" required><option value="">เลือกหมู่</option><option value="1">หมู่ 1</option><option value="2">หมู่ 2</option><option value="3">หมู่ 3</option><option value="4">หมู่ 4</option></select></div>
-                <div class="flex space-x-3 pt-4"><button type="button" onclick="closeAddStudentModal()" class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50">ยกเลิก</button><button type="submit" class="flex-1 btn-primary text-white px-4 py-3 rounded-xl">เพิ่ม</button></div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ชื่อ-นามสกุล</label>
+                    <input type="text" id="studentName" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ระดับชั้น</label>
+                    <select id="studentGrade" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent" required>
+                        <option value="">เลือกระดับชั้น</option>
+                        <option value="m1">ม.1</option>
+                        <option value="m2">ม.2</option>
+                        <option value="m3">ม.3</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">กอง</label>
+                    <select id="studentGroup" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent" required>
+                        <option value="">เลือกกอง</option>
+                        <option value="1">กอง 1</option>
+                        <option value="2">กอง 2</option>
+                        <option value="3">กอง 3</option>
+                        <option value="4">กอง 4</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">หมู่</label>
+                    <select id="studentUnit" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent" required>
+                        <option value="">เลือกหมู่</option>
+                        <option value="1">หมู่ 1</option>
+                        <option value="2">หมู่ 2</option>
+                        <option value="3">หมู่ 3</option>
+                        <option value="4">หมู่ 4</option>
+                    </select>
+                </div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="closeAddStudentModal()" class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50">ยกเลิก</button>
+                    <button type="submit" class="flex-1 btn-primary text-white px-4 py-3 rounded-xl">เพิ่ม</button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- Activity Record Modal -->
     <div id="activityModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 w-full max-w-6xl max-h-[90vh] overflow-y-auto card-shadow">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-xl font-semibold text-gray-800" id="activityModalTitle">บันทึกกิจกรรม</h3>
-                <button onclick="closeActivityModal()" class="p-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <button onclick="closeActivityModal()" class="p-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
+
             <form id="activityForm" class="space-y-6">
+                <!-- Activity Info -->
                 <div class="bg-purple-50 rounded-xl p-4">
                     <h4 class="font-semibold text-purple-800 mb-2">ข้อมูลกิจกรรม</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div><label class="block text-sm font-medium text-gray-700 mb-1">วันที่</label><input type="date" id="activityDate" class="w-full p-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500"></div>
-                        <div><label class="block text-sm font-medium text-gray-700 mb-1">เวลา</label><input type="text" id="activityTime" class="w-full p-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500" readonly></div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">วันที่</label>
+                            <input type="date" id="activityDate" class="w-full p-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">เวลา</label>
+                            <input type="text" id="activityTime" class="w-full p-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500" readonly>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Student Selection -->
                 <div class="bg-blue-50 rounded-xl p-4">
                     <h4 class="font-semibold text-blue-800 mb-4">เลือกลูกเสือที่จะบันทึก</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div><label class="block text-sm font-medium text-gray-700 mb-1">กอง</label><select id="modalGroupFilter" class="w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500" onchange="updateModalStudentsList()"><option value="">เลือกกอง</option><option value="1">กอง 1</option><option value="2">กอง 2</option><option value="3">กอง 3</option><option value="4">กอง 4</option></select></div>
-                        <div><label class="block text-sm font-medium text-gray-700 mb-1">หมู่</label><select id="modalUnitFilter" class="w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500" onchange="updateModalStudentsList()"><option value="">เลือกหมู่</option><option value="1">หมู่ 1</option><option value="2">หมู่ 2</option><option value="3">หมู่ 3</option><option value="4">หมู่ 4</option></select></div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">กอง</label>
+                            <select id="modalGroupFilter" class="w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500" onchange="updateModalStudentsList()">
+                                <option value="">เลือกกอง</option>
+                                <option value="1">กอง 1</option>
+                                <option value="2">กอง 2</option>
+                                <option value="3">กอง 3</option>
+                                <option value="4">กอง 4</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">หมู่</label>
+                            <select id="modalUnitFilter" class="w-full p-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500" onchange="updateModalStudentsList()">
+                                <option value="">เลือกหมู่</option>
+                                <option value="1">หมู่ 1</option>
+                                <option value="2">หมู่ 2</option>
+                                <option value="3">หมู่ 3</option>
+                                <option value="4">หมู่ 4</option>
+                            </select>
+                        </div>
                     </div>
+                    
+                    <!-- Attendance Summary -->
                     <div id="attendanceSummary" class="mb-4 p-3 bg-white rounded-lg border border-blue-200 hidden">
                         <div class="flex items-center justify-between mb-2">
                             <h5 class="font-medium text-gray-800">สรุปการเข้าร่วม</h5>
-                            <div class="flex space-x-4 text-sm"><span class="text-green-600">✅ มา: <span id="presentCount">0</span> คน</span><span class="text-red-600">❌ ไม่มา: <span id="absentCount">0</span> คน</span><span class="text-blue-600">👥 รวม: <span id="totalInUnit">0</span> คน</span></div>
+                            <div class="flex space-x-4 text-sm">
+                                <span class="text-green-600">✅ มา: <span id="presentCount">0</span> คน</span>
+                                <span class="text-red-600">❌ ไม่มา: <span id="absentCount">0</span> คน</span>
+                                <span class="text-blue-600">👥 รวม: <span id="totalInUnit">0</span> คน</span>
+                            </div>
                         </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2"><div id="attendanceBar" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div></div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div id="attendanceBar" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
                         <p class="text-xs text-gray-600 mt-1">เปอร์เซ็นต์การเข้าร่วม: <span id="attendancePercent">0%</span></p>
                     </div>
+                    
+                    <!-- Students Checklist -->
                     <div id="studentsChecklist" class="mb-4 hidden">
                         <div class="flex items-center justify-between mb-3">
                             <h5 class="font-medium text-gray-800">รายชื่อลูกเสือ</h5>
-                            <div class="flex space-x-2"><button type="button" onclick="checkAllStudents(true)" class="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600">เช็คทั้งหมด</button><button type="button" onclick="checkAllStudents(false)" class="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600">ยกเลิกทั้งหมด</button></div>
+                            <div class="flex space-x-2">
+                                <button type="button" onclick="checkAllStudents(true)" class="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600">
+                                    เช็คทั้งหมด
+                                </button>
+                                <button type="button" onclick="checkAllStudents(false)" class="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600">
+                                    ยกเลิกทั้งหมด
+                                </button>
+                            </div>
                         </div>
-                        <div id="studentCheckboxList" class="max-h-48 overflow-y-auto space-y-2"></div>
+                        <div id="studentCheckboxList" class="max-h-48 overflow-y-auto space-y-2">
+                            <!-- Student checkboxes will appear here -->
+                        </div>
                     </div>
+                    
+                    <!-- Quick Actions -->
                     <div class="flex items-center space-x-4">
-                        <button type="button" onclick="selectCheckedStudents()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">เลือกที่เช็คแล้ว</button>
-                        <button type="button" onclick="clearStudentSelection()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-sm">ล้างการเลือก</button>
+                        <button type="button" onclick="selectCheckedStudents()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm">
+                            เลือกที่เช็คแล้ว
+                        </button>
+                        <button type="button" onclick="clearStudentSelection()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-sm">
+                            ล้างการเลือก
+                        </button>
                         <span class="text-sm text-gray-600" id="selectedCount">เลือก 0 คน</span>
                     </div>
-                    <div id="selectedStudentsList" class="mt-4 space-y-2 max-h-32 overflow-y-auto"></div>
+                    
+                    <!-- Selected Students List -->
+                    <div id="selectedStudentsList" class="mt-4 space-y-2 max-h-32 overflow-y-auto">
+                        <!-- Selected students will appear here -->
+                    </div>
                 </div>
-                <div class="bg-blue-50 rounded-xl p-4"><h4 class="font-semibold text-blue-800 mb-4">เกณฑ์การประเมิน</h4><div class="space-y-3" id="rubricItems"></div></div>
+
+                <!-- Rubric Assessment -->
+                <div class="bg-blue-50 rounded-xl p-4">
+                    <h4 class="font-semibold text-blue-800 mb-4">เกณฑ์การประเมิน</h4>
+                    <div class="space-y-3" id="rubricItems">
+                        <!-- Rubric items will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Score and Comments -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div><label class="block text-sm font-medium text-gray-700 mb-2">คะแนนรวม</label><input type="number" id="totalScore" min="0" max="100" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500"></div>
-                    <div><label class="block text-sm font-medium text-gray-700 mb-2">ระดับผลการประเมิน</label><select id="gradeLevel" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500"><option value="">เลือกระดับ</option><option value="excellent">ดีเยี่ยม (90-100)</option><option value="good">ดี (80-89)</option><option value="fair">พอใช้ (70-79)</option><option value="poor">ต้องปรับปรุง (ต่ำกว่า 70)</option></select></div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">คะแนนรวม</label>
+                        <input type="number" id="totalScore" min="0" max="100" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">ระดับผลการประเมิน</label>
+                        <select id="gradeLevel" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500">
+                            <option value="">เลือกระดับ</option>
+                            <option value="excellent">ดีเยี่ยม (90-100)</option>
+                            <option value="good">ดี (80-89)</option>
+                            <option value="fair">พอใช้ (70-79)</option>
+                            <option value="poor">ต้องปรับปรุง (ต่ำกว่า 70)</option>
+                        </select>
+                    </div>
                 </div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">ความคิดเห็น/คอมเมนท์</label><textarea id="comments" rows="4" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500" placeholder="บันทึกความคิดเห็นเกี่ยวกับการทำกิจกรรม..."></textarea></div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">หมายเหตุของผู้กำกับ</label><textarea id="supervisorNotes" rows="3" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500" placeholder="บันทึกหมายเหตุเพิ่มเติม..."></textarea></div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ความคิดเห็น/คอมเมนท์</label>
+                    <textarea id="comments" rows="4" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500" placeholder="บันทึกความคิดเห็นเกี่ยวกับการทำกิจกรรม..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">หมายเหตุของผู้กำกับ</label>
+                    <textarea id="supervisorNotes" rows="3" class="w-full p-3 border border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500" placeholder="บันทึกหมายเหตุเพิ่มเติม..."></textarea>
+                </div>
+
+                <!-- Signature Section -->
                 <div class="bg-green-50 rounded-xl p-4">
                     <h4 class="font-semibold text-green-800 mb-4">ลายเซ็นผู้กำกับ</h4>
                     <div class="signature-pad w-full h-32 flex items-center justify-center cursor-pointer" onclick="openSignaturePad()">
-                        <div class="text-center text-gray-500"><svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg><p class="text-sm">คลิกเพื่อเซ็นชื่อ</p></div>
+                        <div class="text-center text-gray-500">
+                            <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                            </svg>
+                            <p class="text-sm">คลิกเพื่อเซ็นชื่อ</p>
+                        </div>
                     </div>
                     <canvas id="signatureCanvas" class="hidden w-full h-32 border-2 border-dashed border-purple-300 rounded-lg"></canvas>
-                    <div class="flex space-x-2 mt-2"><button type="button" onclick="clearSignature()" class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">ล้าง</button><button type="button" onclick="saveSignature()" class="px-3 py-1 text-sm bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200">บันทึก</button></div>
+                    <div class="flex space-x-2 mt-2">
+                        <button type="button" onclick="clearSignature()" class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">ล้าง</button>
+                        <button type="button" onclick="saveSignature()" class="px-3 py-1 text-sm bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200">บันทึก</button>
+                    </div>
                 </div>
-                <div class="flex space-x-3 pt-4"><button type="button" onclick="closeActivityModal()" class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50">ยกเลิก</button><button type="submit" class="flex-1 btn-primary text-white px-4 py-3 rounded-xl">บันทึกกิจกรรม</button></div>
+
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="closeActivityModal()" class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50">ยกเลิก</button>
+                    <button type="submit" class="flex-1 btn-primary text-white px-4 py-3 rounded-xl">บันทึกกิจกรรม</button>
+                </div>
             </form>
         </div>
     </div>
 
     <script>
-        // --- Google Sheets Integration ---
-        // 🚀 **สำคัญ:** ให้นำ Web App URL ที่ได้จากการ Deploy ในขั้นตอนที่ 2 มาวางที่นี่
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxo_NIsveuMBLhGecNCABQBnWFx6GDi44PEj5HLlN33V1vX6lnwn0Tx3DQUUu1I64yssg/exec';
-
         // Global variables
-        let students = []; 
-        let activities = [];
+        let students = JSON.parse(localStorage.getItem('scoutStudents')) || [];
+        let activities = JSON.parse(localStorage.getItem('scoutActivities')) || [];
         let currentSignature = null;
         let selectedStudentsForActivity = [];
-
-        // --- Loading State Management ---
-        function showLoading(text = 'กำลังประมวลผล...') {
-            document.getElementById('loadingText').textContent = text;
-            document.getElementById('loadingOverlay').classList.remove('hidden');
-        }
-        function hideLoading() {
-            document.getElementById('loadingOverlay').classList.add('hidden');
-        }
         
         // Schedule data
         const scheduleData = {
             m1: {
                 title: "ม.1 - พื้นฐานและการปรับตัว",
                 focus: "ระเบียบวินัย – เงื่อนพื้นฐาน – การทำงานเป็นหมู่",
-                days: [{
-                    day: "วันแรก",
-                    activities: [
-                        { time: "08.30 – 09.00", activity: "พิธีเปิด / เคารพธงชาติ", icon: "🎌" },
-                        { time: "09.00 – 10.00", activity: "ระเบียบแถว (เบื้องต้น)", icon: "👥" },
-                        { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
-                        { time: "10.15 – 11.15", activity: "เงื่อนพื้นฐาน (พิรอด, ตะกรุดเบ็ด, ขัดสมาธิ)", icon: "🪢" },
-                        { time: "11.15 – 12.00", activity: "เกมกลุ่มสัมพันธ์", icon: "🎮" },
-                        { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
-                        { time: "13.00 – 14.30", activity: "ใช้เข็มทิศเบื้องต้น", icon: "🧭" },
-                        { time: "14.30 – 15.30", activity: "เกมผู้นำ-ผู้ตาม", icon: "👑" },
-                        { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
-                    ]
-                }, {
-                    day: "วันที่สอง",
-                    activities: [
-                        { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
-                        { time: "09.00 – 10.00", activity: "เดินทางไกล (2–3 กม.)", icon: "🚶" },
-                        { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
-                        { time: "10.15 – 11.15", activity: "ฝึกใช้เข็มทิศ", icon: "🧭" },
-                        { time: "11.15 – 12.00", activity: "กิจกรรม Teamwork", icon: "🤝" },
-                        { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
-                        { time: "13.00 – 14.30", activity: "บำเพ็ญประโยชน์ (ในโรงเรียน)", icon: "🧹" },
-                        { time: "14.30 – 15.30", activity: "เพลงและเกมลูกเสือ", icon: "🎵" },
-                        { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
-                    ]
-                }, {
-                    day: "วันที่สาม",
-                    activities: [
-                        { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
-                        { time: "09.00 – 10.00", activity: "ปฐมพยาบาลบาดแผลเล็กน้อย", icon: "🏥" },
-                        { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
-                        { time: "10.15 – 11.15", activity: "การก่อไฟง่าย ๆ", icon: "🔥" },
-                        { time: "11.15 – 12.00", activity: "การแข่งขันผูกเงื่อน", icon: "🏆" },
-                        { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
-                        { time: "13.00 – 14.30", activity: "กิจกรรมทบทวน (เงื่อน + เข็มทิศ)", icon: "📚" },
-                        { time: "14.30 – 15.30", activity: "สะท้อนคิด (Reflection)", icon: "💭" },
-                        { time: "15.30 – 16.00", activity: "พิธีปิด + มอบเกียรติบัตร", icon: "🏅" }
-                    ]
-                }]
+                days: [
+                    {
+                        day: "วันแรก",
+                        activities: [
+                            { time: "08.30 – 09.00", activity: "พิธีเปิด / เคารพธงชาติ", icon: "🎌" },
+                            { time: "09.00 – 10.00", activity: "ระเบียบแถว (เบื้องต้น)", icon: "👥" },
+                            { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
+                            { time: "10.15 – 11.15", activity: "เงื่อนพื้นฐาน (พิรอด, ตะกรุดเบ็ด, ขัดสมาธิ)", icon: "🪢" },
+                            { time: "11.15 – 12.00", activity: "เกมกลุ่มสัมพันธ์", icon: "🎮" },
+                            { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
+                            { time: "13.00 – 14.30", activity: "ใช้เข็มทิศเบื้องต้น", icon: "🧭" },
+                            { time: "14.30 – 15.30", activity: "เกมผู้นำ-ผู้ตาม", icon: "👑" },
+                            { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
+                        ]
+                    },
+                    {
+                        day: "วันที่สอง",
+                        activities: [
+                            { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
+                            { time: "09.00 – 10.00", activity: "เดินทางไกล (2–3 กม.)", icon: "🚶" },
+                            { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
+                            { time: "10.15 – 11.15", activity: "ฝึกใช้เข็มทิศ", icon: "🧭" },
+                            { time: "11.15 – 12.00", activity: "กิจกรรม Teamwork", icon: "🤝" },
+                            { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
+                            { time: "13.00 – 14.30", activity: "บำเพ็ญประโยชน์ (ในโรงเรียน)", icon: "🧹" },
+                            { time: "14.30 – 15.30", activity: "เพลงและเกมลูกเสือ", icon: "🎵" },
+                            { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
+                        ]
+                    },
+                    {
+                        day: "วันที่สาม",
+                        activities: [
+                            { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
+                            { time: "09.00 – 10.00", activity: "ปฐมพยาบาลบาดแผลเล็กน้อย", icon: "🏥" },
+                            { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
+                            { time: "10.15 – 11.15", activity: "การก่อไฟง่าย ๆ", icon: "🔥" },
+                            { time: "11.15 – 12.00", activity: "การแข่งขันผูกเงื่อน", icon: "🏆" },
+                            { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
+                            { time: "13.00 – 14.30", activity: "กิจกรรมทบทวน (เงื่อน + เข็มทิศ)", icon: "📚" },
+                            { time: "14.30 – 15.30", activity: "สะท้อนคิด (Reflection)", icon: "💭" },
+                            { time: "15.30 – 16.00", activity: "พิธีปิด + มอบเกียรติบัตร", icon: "🏅" }
+                        ]
+                    }
+                ]
             },
             m2: {
                 title: "ม.2 - การประยุกต์ใช้และความรับผิดชอบ",
                 focus: "การสื่อสาร – เงื่อนประยุกต์ – เดินทางไกลจริง – ปฐมพยาบาลขั้นกลาง",
-                days: [{
-                    day: "วันแรก",
-                    activities: [
-                        { time: "08.30 – 09.00", activity: "พิธีเปิด / หน้าเสาธง", icon: "🎌" },
-                        { time: "09.00 – 10.00", activity: "ระเบียบแถวขั้นสูง (เดินหมู่, รายงานแถว)", icon: "👥" },
-                        { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
-                        { time: "10.15 – 11.15", activity: "เงื่อนประยุกต์ (บ่วงสายธนู, เงื่อนจับตะกร้า)", icon: "🪢" },
-                        { time: "11.15 – 12.00", activity: "เกมผู้นำ-ผู้ตาม", icon: "👑" },
-                        { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
-                        { time: "13.00 – 14.30", activity: "การใช้เข็มทิศร่วมกับแผนที่", icon: "🗺️" },
-                        { time: "14.30 – 15.30", activity: "เกมสร้างทีม", icon: "🤝" },
-                        { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
-                    ]
-                }, {
-                    day: "วันที่สอง",
-                    activities: [
-                        { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
-                        { time: "09.00 – 10.00", activity: "เดินทางไกล (4–5 กม.)", icon: "🚶" },
-                        { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
-                        { time: "10.15 – 11.15", activity: "ศึกษาธรรมชาติ / จุดเรียนรู้", icon: "🌿" },
-                        { time: "11.15 – 12.00", activity: "ฐานเชื่อใจ/Team Building", icon: "🤝" },
-                        { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
-                        { time: "13.00 – 14.30", activity: "บำเพ็ญประโยชน์ (ชุมชน/วัด)", icon: "🧹" },
-                        { time: "14.30 – 15.30", activity: "เพลงลูกเสือประสานเสียง", icon: "🎵" },
-                        { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
-                    ]
-                }, {
-                    day: "วันที่สาม",
-                    activities: [
-                        { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
-                        { time: "09.00 – 10.00", activity: "ปฐมพยาบาล (ห้ามเลือด, หามผู้บาดเจ็บ)", icon: "🏥" },
-                        { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
-                        { time: "10.15 – 11.15", activity: "การสร้างที่พักชั่วคราว", icon: "🏕️" },
-                        { time: "11.15 – 12.00", activity: "เกมกลุ่มสัมพันธ์", icon: "🎮" },
-                        { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
-                        { time: "13.00 – 14.30", activity: "การแข่งขันฐานลูกเสือ (เงื่อน + เข็มทิศ + ปฐมพยาบาล)", icon: "🏆" },
-                        { time: "14.30 – 15.30", activity: "กิจกรรมสะท้อนคิด", icon: "💭" },
-                        { time: "15.30 – 16.00", activity: "พิธีปิด + มอบเกียรติบัตร", icon: "🏅" }
-                    ]
-                }]
+                days: [
+                    {
+                        day: "วันแรก",
+                        activities: [
+                            { time: "08.30 – 09.00", activity: "พิธีเปิด / หน้าเสาธง", icon: "🎌" },
+                            { time: "09.00 – 10.00", activity: "ระเบียบแถวขั้นสูง (เดินหมู่, รายงานแถว)", icon: "👥" },
+                            { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
+                            { time: "10.15 – 11.15", activity: "เงื่อนประยุกต์ (บ่วงสายธนู, เงื่อนจับตะกร้า)", icon: "🪢" },
+                            { time: "11.15 – 12.00", activity: "เกมผู้นำ-ผู้ตาม", icon: "👑" },
+                            { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
+                            { time: "13.00 – 14.30", activity: "การใช้เข็มทิศร่วมกับแผนที่", icon: "🗺️" },
+                            { time: "14.30 – 15.30", activity: "เกมสร้างทีม", icon: "🤝" },
+                            { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
+                        ]
+                    },
+                    {
+                        day: "วันที่สอง",
+                        activities: [
+                            { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
+                            { time: "09.00 – 10.00", activity: "เดินทางไกล (4–5 กม.)", icon: "🚶" },
+                            { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
+                            { time: "10.15 – 11.15", activity: "ศึกษาธรรมชาติ / จุดเรียนรู้", icon: "🌿" },
+                            { time: "11.15 – 12.00", activity: "ฐานเชื่อใจ/Team Building", icon: "🤝" },
+                            { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
+                            { time: "13.00 – 14.30", activity: "บำเพ็ญประโยชน์ (ชุมชน/วัด)", icon: "🧹" },
+                            { time: "14.30 – 15.30", activity: "เพลงลูกเสือประสานเสียง", icon: "🎵" },
+                            { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
+                        ]
+                    },
+                    {
+                        day: "วันที่สาม",
+                        activities: [
+                            { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
+                            { time: "09.00 – 10.00", activity: "ปฐมพยาบาล (ห้ามเลือด, หามผู้บาดเจ็บ)", icon: "🏥" },
+                            { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
+                            { time: "10.15 – 11.15", activity: "การสร้างที่พักชั่วคราว", icon: "🏕️" },
+                            { time: "11.15 – 12.00", activity: "เกมกลุ่มสัมพันธ์", icon: "🎮" },
+                            { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
+                            { time: "13.00 – 14.30", activity: "การแข่งขันฐานลูกเสือ (เงื่อน + เข็มทิศ + ปฐมพยาบาล)", icon: "🏆" },
+                            { time: "14.30 – 15.30", activity: "กิจกรรมสะท้อนคิด", icon: "💭" },
+                            { time: "15.30 – 16.00", activity: "พิธีปิด + มอบเกียรติบัตร", icon: "🏅" }
+                        ]
+                    }
+                ]
             },
             m3: {
                 title: "ม.3 - ความเป็นผู้นำและการเอาตัวรอด",
                 focus: "ความเป็นผู้นำ – การวางแผน – เอาตัวรอด – ถ่ายทอดความรู้",
-                days: [{
-                    day: "วันแรก",
-                    activities: [
-                        { time: "08.30 – 09.00", activity: "พิธีเปิด / หน้าเสาธง", icon: "🎌" },
-                        { time: "09.00 – 10.00", activity: "ระเบียบแถวและการบังคับบัญชา (สั่งการเป็นหมู่)", icon: "👥" },
-                        { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
-                        { time: "10.15 – 11.15", activity: "เงื่อนขั้นสูง (เงื่อนผูกรอก, เงื่อนสมอ)", icon: "🪢" },
-                        { time: "11.15 – 12.00", activity: "กิจกรรมภาวะผู้นำ (ฝึกสั่งการกลุ่มเล็ก)", icon: "👑" },
-                        { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
-                        { time: "13.00 – 14.30", activity: "การใช้แผนที่ภูมิประเทศ", icon: "🗺️" },
-                        { time: "14.30 – 15.30", activity: "เกมผู้นำ-การตัดสินใจ", icon: "🎯" },
-                        { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
-                    ]
-                }, {
-                    day: "วันที่สอง",
-                    activities: [
-                        { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
-                        { time: "09.00 – 10.00", activity: "เดินทางไกล (6–8 กม. + ฐานระหว่างทาง)", icon: "🚶" },
-                        { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
-                        { time: "10.15 – 11.15", activity: "ศึกษาทรัพยากรท้องถิ่น / ภูมิปัญญาชุมชน", icon: "🌿" },
-                        { time: "11.15 – 12.00", activity: "กิจกรรมผู้นำฐานย่อย", icon: "👑" },
-                        { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
-                        { time: "13.00 – 14.30", activity: "บำเพ็ญประโยชน์ (โครงการพัฒนาเล็ก ๆ)", icon: "🧹" },
-                        { time: "14.30 – 15.30", activity: "การแสดงเชิงสร้างสรรค์ (Mini Camp Fire)", icon: "🔥" },
-                        { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
-                    ]
-                }, {
-                    day: "วันที่สาม",
-                    activities: [
-                        { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
-                        { time: "09.00 – 10.00", activity: "ปฐมพยาบาลขั้นสูง (ดามกระดูก, เคลื่อนย้าย)", icon: "🏥" },
-                        { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
-                        { time: "10.15 – 11.15", activity: "ทักษะเอาตัวรอด (หาน้ำ, หาทิศจากดวงดาว)", icon: "⭐" },
-                        { time: "11.15 – 12.00", activity: "นักเรียน ม.3 จัดฐานให้น้อง ม.1–ม.2", icon: "🎓" },
-                        { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
-                        { time: "13.00 – 14.30", activity: "การแข่งขันฐานรวม (เงื่อน + เข็มทิศ + ปฐมพยาบาล + ภาวะผู้นำ)", icon: "🏆" },
-                        { time: "14.30 – 15.30", activity: "กิจกรรมสะท้อนคิด", icon: "💭" },
-                        { time: "15.30 – 16.00", activity: "พิธีปิด + มอบเกียรติบัตร", icon: "🏅" }
-                    ]
-                }]
+                days: [
+                    {
+                        day: "วันแรก",
+                        activities: [
+                            { time: "08.30 – 09.00", activity: "พิธีเปิด / หน้าเสาธง", icon: "🎌" },
+                            { time: "09.00 – 10.00", activity: "ระเบียบแถวและการบังคับบัญชา (สั่งการเป็นหมู่)", icon: "👥" },
+                            { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
+                            { time: "10.15 – 11.15", activity: "เงื่อนขั้นสูง (เงื่อนผูกรอก, เงื่อนสมอ)", icon: "🪢" },
+                            { time: "11.15 – 12.00", activity: "กิจกรรมภาวะผู้นำ (ฝึกสั่งการกลุ่มเล็ก)", icon: "👑" },
+                            { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
+                            { time: "13.00 – 14.30", activity: "การใช้แผนที่ภูมิประเทศ", icon: "🗺️" },
+                            { time: "14.30 – 15.30", activity: "เกมผู้นำ-การตัดสินใจ", icon: "🎯" },
+                            { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
+                        ]
+                    },
+                    {
+                        day: "วันที่สอง",
+                        activities: [
+                            { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
+                            { time: "09.00 – 10.00", activity: "เดินทางไกล (6–8 กม. + ฐานระหว่างทาง)", icon: "🚶" },
+                            { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
+                            { time: "10.15 – 11.15", activity: "ศึกษาทรัพยากรท้องถิ่น / ภูมิปัญญาชุมชน", icon: "🌿" },
+                            { time: "11.15 – 12.00", activity: "กิจกรรมผู้นำฐานย่อย", icon: "👑" },
+                            { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
+                            { time: "13.00 – 14.30", activity: "บำเพ็ญประโยชน์ (โครงการพัฒนาเล็ก ๆ)", icon: "🧹" },
+                            { time: "14.30 – 15.30", activity: "การแสดงเชิงสร้างสรรค์ (Mini Camp Fire)", icon: "🔥" },
+                            { time: "15.30 – 16.00", activity: "สรุปกิจกรรม", icon: "📝" }
+                        ]
+                    },
+                    {
+                        day: "วันที่สาม",
+                        activities: [
+                            { time: "08.30 – 09.00", activity: "กิจกรรมหน้าเสาธง", icon: "🎌" },
+                            { time: "09.00 – 10.00", activity: "ปฐมพยาบาลขั้นสูง (ดามกระดูก, เคลื่อนย้าย)", icon: "🏥" },
+                            { time: "10.00 – 10.15", activity: "พัก", icon: "☕" },
+                            { time: "10.15 – 11.15", activity: "ทักษะเอาตัวรอด (หาน้ำ, หาทิศจากดวงดาว)", icon: "⭐" },
+                            { time: "11.15 – 12.00", activity: "นักเรียน ม.3 จัดฐานให้น้อง ม.1–ม.2", icon: "🎓" },
+                            { time: "12.00 – 13.00", activity: "พักกลางวัน", icon: "🍽️" },
+                            { time: "13.00 – 14.30", activity: "การแข่งขันฐานรวม (เงื่อน + เข็มทิศ + ปฐมพยาบาล + ภาวะผู้นำ)", icon: "🏆" },
+                            { time: "14.30 – 15.30", activity: "กิจกรรมสะท้อนคิด", icon: "💭" },
+                            { time: "15.30 – 16.00", activity: "พิธีปิด + มอบเกียรติบัตร", icon: "🏅" }
+                        ]
+                    }
+                ]
             }
         };
-        // Rubric criteria
+
+        // Rubric criteria for different activities
         const rubricCriteria = {
             default: [
                 { criteria: "การเข้าร่วมกิจกรรม", maxScore: 20 },
@@ -481,437 +755,899 @@
                 { criteria: "การเป็นแบบอย่าง", maxScore: 25 }
             ]
         };
-        
+
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            loadDataFromSheet();
             showTab('schedule');
+            updateDashboard();
+            renderStudentsList();
             
-            document.getElementById('mobileMenuBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
-            document.getElementById('closeMobileMenu').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
-            document.getElementById('addStudentForm').addEventListener('submit', (e) => { e.preventDefault(); addStudent(); });
-            document.getElementById('activityForm').addEventListener('submit', (e) => { e.preventDefault(); saveActivityRecord(); });
+            // Mobile menu handlers
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                document.getElementById('mobileMenu').classList.add('open');
+            });
+            
+            document.getElementById('closeMobileMenu').addEventListener('click', function() {
+                document.getElementById('mobileMenu').classList.remove('open');
+            });
+
+            // Add student form handler
+            document.getElementById('addStudentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addStudent();
+            });
+
+            // Activity form handler
+            document.getElementById('activityForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveActivityRecord();
+            });
+
+            // Filter handlers
             document.getElementById('gradeFilter').addEventListener('change', renderStudentsList);
             document.getElementById('groupFilter').addEventListener('change', renderStudentsList);
         });
 
-        // --- NEW & IMPROVED: Functions for Google Sheets Communication ---
-        async function loadDataFromSheet() {
-            showLoading('กำลังดึงข้อมูลล่าสุดจาก Google Sheets...');
-            try {
-                if (SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
-                    throw new Error("ยังไม่ได้ตั้งค่า SCRIPT_URL");
-                }
-                const [studentsRes, activitiesRes] = await Promise.all([
-                    fetch(`${SCRIPT_URL}?action=getStudents`),
-                    fetch(`${SCRIPT_URL}?action=getActivities`)
-                ]);
-
-                if (!studentsRes.ok || !activitiesRes.ok) throw new Error("Network response was not ok.");
-
-                const studentsResult = await studentsRes.json();
-                const activitiesResult = await activitiesRes.json();
-
-                students = studentsResult.success ? (studentsResult.data || []) : [];
-                activities = activitiesResult.success ? (activitiesResult.data || []) : [];
-                
-                localStorage.setItem('scoutStudents', JSON.stringify(students));
-                localStorage.setItem('scoutActivities', JSON.stringify(activities));
-                
-                updateUI();
-                
-            } catch (error) {
-                console.error('Error loading data from Google Sheets:', error);
-                alert('❌ เกิดข้อผิดพลาดในการโหลดข้อมูล\n\nจะลองใช้ข้อมูลที่บันทึกไว้ในเครื่อง (ถ้ามี)');
-                students = JSON.parse(localStorage.getItem('scoutStudents')) || [];
-                activities = JSON.parse(localStorage.getItem('scoutActivities')) || [];
-                updateUI();
-            } finally {
-                hideLoading();
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.remove('hidden');
+            
+            // Add active class to selected nav tab (desktop only)
+            const activeTab = document.querySelector(`[onclick="showTab('${tabName}')"]`);
+            if (activeTab && !activeTab.closest('#mobileMenu')) {
+                activeTab.classList.add('active');
+            }
+            
+            // Close mobile menu
+            document.getElementById('mobileMenu').classList.remove('open');
+            
+            // Update content based on tab
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            } else if (tabName === 'students') {
+                renderStudentsList();
+            } else if (tabName === 'records') {
+                renderRecordsList();
             }
         }
 
-        async function syncDataToSheet() {
-            if (SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
-                alert("❌ กรุณาตั้งค่า SCRIPT_URL ในไฟล์ HTML ก่อนครับ");
-                return;
-            }
-            const syncButton = document.getElementById('syncButton');
-            const syncButtonText = document.getElementById('syncButtonText');
-            const syncIcon = document.getElementById('syncIcon');
-
-            syncButton.disabled = true;
-            syncButtonText.textContent = 'กำลัง Sync...';
-            syncIcon.classList.add('animate-spin');
-            showLoading('กำลังซิงค์ข้อมูลกับ Google Sheets...');
-
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        action: 'syncAll', 
-                        students: students, 
-                        activities: activities 
-                    })
+        // Show grade schedule
+        function showGradeSchedule(grade) {
+            const data = scheduleData[grade];
+            const content = document.getElementById('scheduleContent');
+            
+            let html = `
+                <div class="fade-in">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">${data.title}</h3>
+                        <p class="text-purple-600 bg-purple-50 rounded-lg p-3">
+                            <span class="font-medium">จุดเน้น:</span> ${data.focus}
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            `;
+            
+            data.days.forEach((day, dayIndex) => {
+                html += `
+                    <div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 card-shadow">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 text-center bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg py-2">
+                            ${day.day}
+                        </h4>
+                        <div class="space-y-3">
+                `;
+                
+                day.activities.forEach((activity, actIndex) => {
+                    html += `
+                        <div class="activity-card bg-white rounded-lg p-3 flex items-center justify-between hover:shadow-md transition-all duration-300">
+                            <div class="flex items-center space-x-3 flex-1">
+                                <span class="text-xl">${activity.icon}</span>
+                                <div class="flex-1">
+                                    <p class="text-xs text-purple-600 font-medium">${activity.time}</p>
+                                    <p class="text-sm text-gray-800 font-medium">${activity.activity}</p>
+                                </div>
+                            </div>
+                            <button onclick="openActivityModal('${grade}', ${dayIndex}, ${actIndex})" 
+                                    class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-lg text-xs font-medium transition-colors duration-200 flex items-center space-x-1">
+                                <span>📝</span>
+                                <span>บันทึก</span>
+                            </button>
+                        </div>
+                    `;
                 });
-
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok, status: ${response.status}`);
-                }
                 
-                const result = await response.json();
-
-                if (result.success) {
-                    alert('✅ ' + result.message);
-                } else {
-                    throw new Error(result.message);
-                }
-
-            } catch (error) {
-                console.error('Error syncing data:', error);
-                alert('❌ เกิดข้อผิดพลาดในการ Sync ข้อมูล: ' + error.message);
-            } finally {
-                syncButton.disabled = false;
-                syncButtonText.textContent = 'Sync ข้อมูล';
-                syncIcon.classList.remove('animate-spin');
-                hideLoading();
-            }
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div></div>';
+            content.innerHTML = html;
         }
 
-        // --- Core Functions ---
+        // Student management
+        function showAddStudentModal() {
+            document.getElementById('addStudentModal').classList.remove('hidden');
+        }
+
+        function closeAddStudentModal() {
+            document.getElementById('addStudentModal').classList.add('hidden');
+            document.getElementById('addStudentForm').reset();
+        }
+
         function addStudent() {
             const name = document.getElementById('studentName').value;
             const grade = document.getElementById('studentGrade').value;
             const group = document.getElementById('studentGroup').value;
             const unit = document.getElementById('studentUnit').value;
-            const student = { id: Date.now(), name, grade, group, unit };
+            
+            const student = {
+                id: Date.now(),
+                name,
+                grade,
+                group,
+                unit,
+                activities: []
+            };
+            
             students.push(student);
             localStorage.setItem('scoutStudents', JSON.stringify(students));
+            
             closeAddStudentModal();
-            updateUI();
-            syncDataToSheet();
+            renderStudentsList();
+            updateDashboard();
         }
 
         function deleteStudent(id) {
             if (confirm('คุณแน่ใจหรือไม่ที่จะลบลูกเสือคนนี้?')) {
                 students = students.filter(s => s.id !== id);
                 localStorage.setItem('scoutStudents', JSON.stringify(students));
-                updateUI();
-                syncDataToSheet();
+                renderStudentsList();
+                updateDashboard();
             }
-        }
-        
-        function saveActivityRecord() {
-            if (!document.getElementById('activityDate').value) {
-                alert('❌ กรุณาเลือกวันที่ก่อนบันทึกกิจกรรม');
-                return;
-            }
-            if (selectedStudentsForActivity.length === 0) {
-                if (!confirm('⚠️ ยังไม่ได้เลือกลูกเสือ\n\nต้องการบันทึกกิจกรรมโดยไม่มีลูกเสือหรือไม่?')) {
-                    alert('📋 วิธีเลือกลูกเสือ:\n1. เลือกกองและหมู่\n2. เช็คชื่อลูกเสือ\n3. คลิก "เลือกที่เช็คแล้ว"');
-                    return;
-                }
-            }
-            
-            const modal = document.getElementById('activityModal');
-            const { grade, dayIndex, actIndex } = modal.dataset;
-            const activity = scheduleData[grade].days[dayIndex].activities[actIndex];
-            const activityDate = document.getElementById('activityDate').value;
-            const totalScore = document.getElementById('totalScore').value || '0';
-            const gradeLevel = document.getElementById('gradeLevel').value || 'fair';
-            const comments = document.getElementById('comments').value || '';
-            const supervisorNotes = document.getElementById('supervisorNotes').value || '';
-            const rubricScores = getRubricScores();
-            const timestamp = new Date().toISOString();
-
-            const createRecord = (student) => ({
-                id: Date.now() + Math.random(),
-                studentId: student?.id || null,
-                studentName: student?.name || 'ไม่ระบุลูกเสือ',
-                studentGrade: student?.grade || grade,
-                studentGroup: student?.group || 'ทั้งหมด',
-                studentUnit: student?.unit || 'ทั้งหมด',
-                grade, dayIndex, actIndex,
-                activityName: activity.activity,
-                time: activity.time,
-                date: activityDate,
-                totalScore, gradeLevel, comments, supervisorNotes, signature: currentSignature,
-                rubricScores, timestamp
-            });
-
-            if (selectedStudentsForActivity.length > 0) {
-                selectedStudentsForActivity.forEach(student => {
-                    const record = createRecord(student);
-                    activities.push(record);
-                });
-            } else {
-                activities.push(createRecord(null));
-            }
-            
-            localStorage.setItem('scoutActivities', JSON.stringify(activities));
-            closeActivityModal();
-            updateUI();
-            alert(`✅ บันทึกกิจกรรมเรียบร้อยแล้ว!`);
-            syncDataToSheet();
         }
 
-        // --- UI and Helper Functions ---
-        function updateUI() {
-            updateDashboard();
-            renderStudentsList();
-            renderRecordsList();
-        }
-        
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(tabName + 'Tab').classList.remove('hidden');
-            const activeTab = document.querySelector(`[onclick="showTab('${tabName}')"]`);
-            if (activeTab && !activeTab.closest('#mobileMenu')) activeTab.classList.add('active');
-            document.getElementById('mobileMenu').classList.remove('open');
-            if (tabName === 'dashboard') updateDashboard();
-            else if (tabName === 'students') renderStudentsList();
-            else if (tabName === 'records') renderRecordsList();
-        }
-        function showGradeSchedule(grade) {
-            const data = scheduleData[grade];
-            let html = `<div class="fade-in"><div class="mb-6"><h3 class="text-2xl font-bold text-gray-800 mb-2">${data.title}</h3><p class="text-purple-600 bg-purple-50 rounded-lg p-3"><span class="font-medium">จุดเน้น:</span> ${data.focus}</p></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-6">`;
-            data.days.forEach((day, dayIndex) => {
-                html += `<div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 card-shadow"><h4 class="text-lg font-semibold text-gray-800 mb-4 text-center bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg py-2">${day.day}</h4><div class="space-y-3">`;
-                day.activities.forEach((activity, actIndex) => {
-                    html += `<div class="activity-card bg-white rounded-lg p-3 flex items-center justify-between"><div class="flex items-center space-x-3 flex-1"><span class="text-xl">${activity.icon}</span><div class="flex-1"><p class="text-xs text-purple-600 font-medium">${activity.time}</p><p class="text-sm text-gray-800 font-medium">${activity.activity}</p></div></div><button onclick="openActivityModal('${grade}', ${dayIndex}, ${actIndex})" class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-lg text-xs font-medium flex items-center space-x-1"><span>📝</span><span>บันทึก</span></button></div>`;
-                });
-                html += `</div></div>`;
-            });
-            html += '</div></div>';
-            document.getElementById('scheduleContent').innerHTML = html;
-        }
-        function showAddStudentModal() { document.getElementById('addStudentModal').classList.remove('hidden'); }
-        function closeAddStudentModal() { document.getElementById('addStudentModal').classList.add('hidden'); document.getElementById('addStudentForm').reset(); }
         function renderStudentsList() {
             const gradeFilter = document.getElementById('gradeFilter').value;
             const groupFilter = document.getElementById('groupFilter').value;
-            let filteredStudents = students.filter(s => (!gradeFilter || s.grade === gradeFilter) && (!groupFilter || s.group === groupFilter));
-            const container = document.getElementById('studentsList');
-            if (filteredStudents.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-500 py-8">ไม่พบข้อมูลลูกเสือ</p>'; return;
+            
+            let filteredStudents = students;
+            
+            if (gradeFilter) {
+                filteredStudents = filteredStudents.filter(s => s.grade === gradeFilter);
             }
-            const grouped = filteredStudents.reduce((acc, student) => {
+            
+            if (groupFilter) {
+                filteredStudents = filteredStudents.filter(s => s.group === groupFilter);
+            }
+            
+            const container = document.getElementById('studentsList');
+            
+            if (filteredStudents.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-8">ไม่พบข้อมูลลูกเสือ</p>';
+                return;
+            }
+            
+            // Group by grade, group, and unit
+            const grouped = {};
+            filteredStudents.forEach(student => {
                 const key = `${student.grade}-${student.group}-${student.unit}`;
-                if (!acc[key]) acc[key] = { ...student, students: [] };
-                acc[key].students.push(student);
-                return acc;
-            }, {});
+                if (!grouped[key]) {
+                    grouped[key] = {
+                        grade: student.grade,
+                        group: student.group,
+                        unit: student.unit,
+                        students: []
+                    };
+                }
+                grouped[key].students.push(student);
+            });
+            
             let html = '';
             Object.values(grouped).forEach(group => {
                 const gradeText = group.grade === 'm1' ? 'ม.1' : group.grade === 'm2' ? 'ม.2' : 'ม.3';
-                html += `<div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 card-shadow"><h4 class="font-semibold text-gray-800 mb-3 flex items-center"><span class="mr-2">🎯</span>${gradeText} - กอง ${group.group} - หมู่ ${group.unit}</h4><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">`;
+                html += `
+                    <div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 card-shadow">
+                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <span class="mr-2">🎯</span>
+                            ${gradeText} - กอง ${group.group} - หมู่ ${group.unit}
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                `;
+                
                 group.students.forEach(student => {
-                    html += `<div class="bg-white rounded-lg p-3 flex items-center justify-between"><div class="flex items-center space-x-3"><div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center"><span class="text-purple-600 text-sm">👤</span></div><span class="text-sm font-medium text-gray-800">${student.name}</span></div><button onclick="deleteStudent(${student.id})" class="text-red-500 hover:text-red-700 p-1 rounded"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div>`;
+                    html += `
+                        <div class="bg-white rounded-lg p-3 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <span class="text-purple-600 text-sm">👤</span>
+                                </div>
+                                <span class="text-sm font-medium text-gray-800">${student.name}</span>
+                            </div>
+                            <button onclick="deleteStudent(${student.id})" 
+                                    class="text-red-500 hover:text-red-700 p-1 rounded">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    `;
                 });
+                
                 html += '</div></div>';
             });
+            
             container.innerHTML = html;
         }
+
+        // Activity recording
         function openActivityModal(grade, dayIndex, actIndex) {
-            const activity = scheduleData[grade].days[dayIndex].activities[actIndex];
+            console.log('Opening activity modal with:', { grade, dayIndex, actIndex });
+            
+            const data = scheduleData[grade];
+            if (!data) {
+                console.error('No data found for grade:', grade);
+                alert('ไม่พบข้อมูลระดับชั้น กรุณาลองใหม่');
+                return;
+            }
+            
+            const activity = data.days[dayIndex].activities[actIndex];
+            if (!activity) {
+                console.error('No activity found for:', { grade, dayIndex, actIndex });
+                alert('ไม่พบข้อมูลกิจกรรม กรุณาลองใหม่');
+                return;
+            }
+            
+            console.log('Activity found:', activity);
+            
+            // Set modal content
             document.getElementById('activityModalTitle').textContent = `บันทึกกิจกรรม: ${activity.activity}`;
             document.getElementById('activityTime').value = activity.time;
-            document.getElementById('activityDate').valueAsDate = new Date();
+            document.getElementById('activityDate').value = new Date().toISOString().split('T')[0];
+            
+            // Set rubric based on activity type
             let rubricType = 'default';
-            if (activity.activity.includes('เงื่อน') || activity.activity.includes('เข็มทิศ') || activity.activity.includes('ปฐมพยาบาล')) rubricType = 'skill';
-            else if (activity.activity.includes('ผู้นำ') || activity.activity.includes('สั่งการ')) rubricType = 'leadership';
+            if (activity.activity.includes('เงื่อน') || activity.activity.includes('เข็มทิศ') || activity.activity.includes('ปฐมพยาบาล')) {
+                rubricType = 'skill';
+            } else if (activity.activity.includes('ผู้นำ') || activity.activity.includes('สั่งการ')) {
+                rubricType = 'leadership';
+            }
+            
+            console.log('Using rubric type:', rubricType);
             renderRubricItems(rubricType);
+            
+            // Store current activity info
             const modal = document.getElementById('activityModal');
             modal.dataset.grade = grade;
             modal.dataset.dayIndex = dayIndex;
             modal.dataset.actIndex = actIndex;
+            
+            console.log('Modal dataset set:', modal.dataset);
+            
+            // Reset student selection
             selectedStudentsForActivity = [];
             document.getElementById('modalGroupFilter').value = '';
             document.getElementById('modalUnitFilter').value = '';
             updateSelectedStudentsList();
+            
+            // Hide checklist initially
             document.getElementById('studentsChecklist').classList.add('hidden');
             document.getElementById('attendanceSummary').classList.add('hidden');
+            
+            // Show modal
+            console.log('Showing modal...');
             modal.classList.remove('hidden');
-            modal.querySelector('.max-h-\\[90vh\\]').scrollTop = 0;
+            
+            // Force scroll to top of modal
+            setTimeout(() => {
+                modal.scrollTop = 0;
+                console.log('Modal should be visible now');
+            }, 100);
         }
+
         function updateModalStudentsList() {
             const grade = document.getElementById('activityModal').dataset.grade;
             const group = document.getElementById('modalGroupFilter').value;
             const unit = document.getElementById('modalUnitFilter').value;
-            let filtered = students.filter(s => s.grade === grade && s.group === group && (!unit || s.unit === unit));
+            
+            let filteredStudents = students.filter(s => s.grade === grade);
+            
+            if (group) {
+                filteredStudents = filteredStudents.filter(s => s.group === group);
+            }
+            
+            if (unit) {
+                filteredStudents = filteredStudents.filter(s => s.unit === unit);
+            }
+            
+            // Show/hide checklist and summary based on selection
             const checklistDiv = document.getElementById('studentsChecklist');
             const summaryDiv = document.getElementById('attendanceSummary');
-            if (group && unit && filtered.length > 0) {
+            
+            // Show checklist when both group and unit are selected, OR when only group is selected
+            if ((group && unit && filteredStudents.length > 0) || (group && !unit && filteredStudents.length > 0)) {
+                // Show checklist and summary
                 checklistDiv.classList.remove('hidden');
                 summaryDiv.classList.remove('hidden');
-                renderStudentCheckboxes(filtered);
-                updateAttendanceSummary(filtered);
+                
+                // Render student checkboxes
+                renderStudentCheckboxes(filteredStudents);
+                
+                // Update summary
+                updateAttendanceSummary(filteredStudents);
             } else {
+                // Hide checklist and summary
                 checklistDiv.classList.add('hidden');
                 summaryDiv.classList.add('hidden');
             }
         }
+
         function renderStudentCheckboxes(students) {
             const container = document.getElementById('studentCheckboxList');
+            
             let html = '';
             students.forEach(student => {
                 const isSelected = selectedStudentsForActivity.find(s => s.id === student.id);
-                html += `<label class="flex items-center justify-between bg-white rounded-lg p-3 border border-gray-200 cursor-pointer"><div class="flex items-center space-x-3"><input type="checkbox" data-student-id="${student.id}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" onchange="updateAttendanceFromCheckbox()" ${isSelected ? 'checked' : ''}><span class="text-sm font-medium text-gray-800">${student.name}</span></div><div class="flex items-center space-x-2"><span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">กอง ${student.group}</span><span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">หมู่ ${student.unit}</span></div></label>`;
+                html += `
+                    <div class="flex items-center justify-between bg-white rounded-lg p-3 border border-gray-200">
+                        <div class="flex items-center space-x-3">
+                            <input type="checkbox" 
+                                   id="student_${student.id}" 
+                                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                                   onchange="updateAttendanceFromCheckbox()"
+                                   ${isSelected ? 'checked' : ''}>
+                            <label for="student_${student.id}" class="text-sm font-medium text-gray-800 cursor-pointer">
+                                ${student.name}
+                            </label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">
+                                กอง ${student.group}
+                            </span>
+                            <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">
+                                หมู่ ${student.unit}
+                            </span>
+                        </div>
+                    </div>
+                `;
             });
+            
             container.innerHTML = html;
         }
+
         function updateAttendanceSummary(allStudents) {
-            const presentCount = document.querySelectorAll('#studentCheckboxList input:checked').length;
+            const checkedBoxes = document.querySelectorAll('#studentCheckboxList input[type="checkbox"]:checked');
+            const presentCount = checkedBoxes.length;
             const totalCount = allStudents.length;
             const absentCount = totalCount - presentCount;
             const percentage = totalCount > 0 ? Math.round((presentCount / totalCount) * 100) : 0;
+            
             document.getElementById('presentCount').textContent = presentCount;
             document.getElementById('absentCount').textContent = absentCount;
             document.getElementById('totalInUnit').textContent = totalCount;
             document.getElementById('attendancePercent').textContent = percentage + '%';
+            document.getElementById('attendanceBar').style.width = percentage + '%';
+            
+            // Change bar color based on percentage
             const bar = document.getElementById('attendanceBar');
-            bar.style.width = percentage + '%';
-            bar.className = `h-2 rounded-full transition-all duration-300 ${percentage >= 80 ? 'bg-green-500' : percentage >= 60 ? 'bg-yellow-500' : 'bg-red-500'}`;
+            if (percentage >= 80) {
+                bar.className = 'bg-green-500 h-2 rounded-full transition-all duration-300';
+            } else if (percentage >= 60) {
+                bar.className = 'bg-yellow-500 h-2 rounded-full transition-all duration-300';
+            } else {
+                bar.className = 'bg-red-500 h-2 rounded-full transition-all duration-300';
+            }
         }
+
         function updateAttendanceFromCheckbox() {
             const grade = document.getElementById('activityModal').dataset.grade;
             const group = document.getElementById('modalGroupFilter').value;
             const unit = document.getElementById('modalUnitFilter').value;
-            const allStudentsInUnit = students.filter(s => s.grade === grade && s.group === group && s.unit === unit);
-            updateAttendanceSummary(allStudentsInUnit);
+            
+            const allStudents = students.filter(s => 
+                s.grade === grade && s.group === group && s.unit === unit
+            );
+            
+            updateAttendanceSummary(allStudents);
         }
+
         function checkAllStudents(checked) {
-            document.querySelectorAll('#studentCheckboxList input[type="checkbox"]').forEach(c => c.checked = checked);
+            const checkboxes = document.querySelectorAll('#studentCheckboxList input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = checked;
+            });
             updateAttendanceFromCheckbox();
         }
+
         function selectCheckedStudents() {
+            const checkedBoxes = document.querySelectorAll('#studentCheckboxList input[type="checkbox"]:checked');
             selectedStudentsForActivity = [];
-            document.querySelectorAll('#studentCheckboxList input:checked').forEach(checkbox => {
-                const studentId = parseInt(checkbox.dataset.studentId);
+            
+            checkedBoxes.forEach(checkbox => {
+                const studentId = parseInt(checkbox.id.replace('student_', ''));
                 const student = students.find(s => s.id === studentId);
-                if (student && !selectedStudentsForActivity.find(s => s.id === student.id)) {
+                if (student) {
                     selectedStudentsForActivity.push(student);
                 }
             });
+            
             updateSelectedStudentsList();
         }
-        function clearStudentSelection() { selectedStudentsForActivity = []; updateSelectedStudentsList(); }
-        function removeSelectedStudent(studentId) { selectedStudentsForActivity = selectedStudentsForActivity.filter(s => s.id !== studentId); updateSelectedStudentsList(); }
+
+
+
+        function clearStudentSelection() {
+            selectedStudentsForActivity = [];
+            updateSelectedStudentsList();
+        }
+
+        function removeSelectedStudent(studentId) {
+            selectedStudentsForActivity = selectedStudentsForActivity.filter(s => s.id !== studentId);
+            updateSelectedStudentsList();
+        }
+
         function updateSelectedStudentsList() {
             const container = document.getElementById('selectedStudentsList');
             const count = document.getElementById('selectedCount');
+            
             count.textContent = `เลือก ${selectedStudentsForActivity.length} คน`;
+            
             if (selectedStudentsForActivity.length === 0) {
-                container.innerHTML = '<p class="text-sm text-gray-500 text-center py-2">ยังไม่ได้เลือกลูกเสือ</p>'; return;
+                container.innerHTML = '<p class="text-sm text-gray-500 text-center py-2">ยังไม่ได้เลือกลูกเสือ</p>';
+                return;
             }
+            
             let html = '';
             selectedStudentsForActivity.forEach(student => {
                 const gradeText = student.grade === 'm1' ? 'ม.1' : student.grade === 'm2' ? 'ม.2' : 'ม.3';
-                html += `<div class="flex items-center justify-between bg-white rounded-lg p-2 border border-blue-200"><div class="flex items-center space-x-2"><span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">${gradeText}</span><span class="text-sm font-medium">${student.name}</span><span class="text-xs text-gray-500">กอง ${student.group} หมู่ ${student.unit}</span></div><button type="button" onclick="removeSelectedStudent(${student.id})" class="text-red-500 hover:text-red-700 p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button></div>`;
+                html += `
+                    <div class="flex items-center justify-between bg-white rounded-lg p-2 border border-blue-200">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">${gradeText}</span>
+                            <span class="text-sm font-medium">${student.name}</span>
+                            <span class="text-xs text-gray-500">กอง ${student.group} หมู่ ${student.unit}</span>
+                        </div>
+                        <button type="button" onclick="removeSelectedStudent(${student.id})" 
+                                class="text-red-500 hover:text-red-700 p-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                `;
             });
+            
             container.innerHTML = html;
         }
-        function closeActivityModal() { document.getElementById('activityModal').classList.add('hidden'); document.getElementById('activityForm').reset(); clearSignature(); selectedStudentsForActivity = []; }
+
+        function closeActivityModal() {
+            document.getElementById('activityModal').classList.add('hidden');
+            document.getElementById('activityForm').reset();
+            clearSignature();
+            selectedStudentsForActivity = [];
+        }
+
         function renderRubricItems(type) {
             const criteria = rubricCriteria[type];
+            const container = document.getElementById('rubricItems');
+            
             let html = '';
             criteria.forEach((item, index) => {
-                html += `<div class="rubric-item p-3"><div class="flex items-center justify-between mb-2"><span class="text-sm font-medium text-gray-700">${item.criteria}</span><span class="text-xs text-purple-600">คะแนนเต็ม ${item.maxScore}</span></div><div class="flex items-center space-x-2"><input type="range" min="0" max="${item.maxScore}" value="0" class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" id="rubric_${index}" oninput="updateRubricScore(${index}, this.value)"><span class="text-sm font-medium text-purple-600 w-12 text-center" id="score_${index}">0</span></div></div>`;
+                html += `
+                    <div class="rubric-item p-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-medium text-gray-700">${item.criteria}</span>
+                            <span class="text-xs text-purple-600">คะแนนเต็ม ${item.maxScore}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="range" min="0" max="${item.maxScore}" value="0" 
+                                   class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                                   id="rubric_${index}" 
+                                   oninput="updateRubricScore(${index}, this.value, ${item.maxScore})">
+                            <span class="text-sm font-medium text-purple-600 w-12 text-center" id="score_${index}">0</span>
+                        </div>
+                    </div>
+                `;
             });
-            document.getElementById('rubricItems').innerHTML = html;
+            
+            container.innerHTML = html;
         }
-        function updateRubricScore(index, value) {
+
+        function updateRubricScore(index, value, maxScore) {
             document.getElementById(`score_${index}`).textContent = value;
+            
+            // Calculate total score
+            const rubricItems = document.querySelectorAll('[id^="rubric_"]');
             let total = 0;
-            document.querySelectorAll('[id^="rubric_"]').forEach(item => { total += parseInt(item.value); });
-            document.getElementById('totalScore').value = total;
-            const gradeSelect = document.getElementById('gradeLevel');
-            if (total >= 90) gradeSelect.value = 'excellent';
-            else if (total >= 80) gradeSelect.value = 'good';
-            else if (total >= 70) gradeSelect.value = 'fair';
-            else gradeSelect.value = 'poor';
-        }
-        function getRubricScores() {
-            const scores = [];
-            document.querySelectorAll('[id^="rubric_"]').forEach((item, index) => {
-                const criteriaText = item.closest('.rubric-item').querySelector('.text-gray-700').textContent.trim();
-                scores.push({ criteria: criteriaText, score: parseInt(item.value) || 0, maxScore: parseInt(item.max) || 20 });
+            rubricItems.forEach(item => {
+                total += parseInt(item.value);
             });
+            
+            document.getElementById('totalScore').value = total;
+            
+            // Update grade level
+            const gradeSelect = document.getElementById('gradeLevel');
+            if (total >= 90) {
+                gradeSelect.value = 'excellent';
+            } else if (total >= 80) {
+                gradeSelect.value = 'good';
+            } else if (total >= 70) {
+                gradeSelect.value = 'fair';
+            } else {
+                gradeSelect.value = 'poor';
+            }
+        }
+
+        function saveActivityRecord() {
+            try {
+                console.log('Starting to save activity record...');
+                
+                // Get activity date - this is required
+                const activityDate = document.getElementById('activityDate').value;
+                if (!activityDate) {
+                    alert('❌ กรุณาเลือกวันที่ก่อนบันทึกกิจกรรม');
+                    return false;
+                }
+                
+                // Get modal data first
+                const modal = document.getElementById('activityModal');
+                const grade = modal.dataset.grade;
+                const dayIndex = parseInt(modal.dataset.dayIndex);
+                const actIndex = parseInt(modal.dataset.actIndex);
+                
+                console.log('Modal data:', { grade, dayIndex, actIndex });
+                
+                // Validate modal data
+                if (!grade || isNaN(dayIndex) || isNaN(actIndex)) {
+                    alert('❌ ข้อมูลกิจกรรมไม่ถูกต้อง กรุณาเปิด Modal ใหม่');
+                    return false;
+                }
+                
+                const activity = scheduleData[grade]?.days[dayIndex]?.activities[actIndex];
+                if (!activity) {
+                    alert('❌ ไม่พบข้อมูลกิจกรรม');
+                    return false;
+                }
+                
+                // Allow saving without students for testing purposes, but warn user
+                if (selectedStudentsForActivity.length === 0) {
+                    const proceed = confirm('⚠️ ยังไม่ได้เลือกลูกเสือ\n\nต้องการบันทึกกิจกรรมโดยไม่มีลูกเสือหรือไม่?\n\n(สำหรับทดสอบระบบ)');
+                    if (!proceed) {
+                        alert('📋 วิธีเลือกลูกเสือ:\n1. เลือกกองและหมู่\n2. เช็คชื่อลูกเสือที่เข้าร่วม\n3. คลิก "เลือกที่เช็คแล้ว"');
+                        return false;
+                    }
+                }
+                
+                // Get scores and validate
+                const totalScore = document.getElementById('totalScore').value || '0';
+                const rubricScores = getRubricScores();
+                
+                // Calculate total from rubric if totalScore is 0
+                let calculatedTotal = parseInt(totalScore);
+                if (calculatedTotal === 0 && rubricScores.length > 0) {
+                    calculatedTotal = rubricScores.reduce((sum, item) => sum + (item.score || 0), 0);
+                }
+                
+                console.log('Calculated total score:', calculatedTotal);
+                
+                // If no students selected, create a general activity record
+                if (selectedStudentsForActivity.length === 0) {
+                    const record = {
+                        id: Date.now(),
+                        studentId: null,
+                        studentName: 'ไม่ระบุลูกเสือ',
+                        studentGrade: grade,
+                        studentGroup: 'ทั้งหมด',
+                        studentUnit: 'ทั้งหมด',
+                        grade,
+                        dayIndex,
+                        actIndex,
+                        activityName: activity.activity,
+                        time: activity.time,
+                        date: activityDate,
+                        totalScore: calculatedTotal.toString(),
+                        gradeLevel: document.getElementById('gradeLevel').value || 'fair',
+                        comments: document.getElementById('comments').value || '',
+                        supervisorNotes: document.getElementById('supervisorNotes').value || '',
+                        signature: currentSignature,
+                        rubricScores: rubricScores,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    activities.push(record);
+                    console.log('Added general activity record');
+                } else {
+                    // Create records for each selected student
+                    const timestamp = Date.now();
+                    
+                    selectedStudentsForActivity.forEach((student, index) => {
+                        const record = {
+                            id: timestamp + index,
+                            studentId: student.id,
+                            studentName: student.name,
+                            studentGrade: student.grade,
+                            studentGroup: student.group,
+                            studentUnit: student.unit,
+                            grade,
+                            dayIndex,
+                            actIndex,
+                            activityName: activity.activity,
+                            time: activity.time,
+                            date: activityDate,
+                            totalScore: calculatedTotal.toString(),
+                            gradeLevel: document.getElementById('gradeLevel').value || 'fair',
+                            comments: document.getElementById('comments').value || '',
+                            supervisorNotes: document.getElementById('supervisorNotes').value || '',
+                            signature: currentSignature,
+                            rubricScores: rubricScores,
+                            timestamp: new Date().toISOString()
+                        };
+                        
+                        activities.push(record);
+                        
+                        // Update student's activity history
+                        const studentIndex = students.findIndex(s => s.id === student.id);
+                        if (studentIndex !== -1) {
+                            if (!students[studentIndex].activities) {
+                                students[studentIndex].activities = [];
+                            }
+                            students[studentIndex].activities.push({
+                                activityName: activity.activity,
+                                date: record.date,
+                                score: record.totalScore,
+                                grade: record.gradeLevel
+                            });
+                        }
+                    });
+                    
+                    console.log(`Added ${selectedStudentsForActivity.length} student records`);
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('scoutActivities', JSON.stringify(activities));
+                localStorage.setItem('scoutStudents', JSON.stringify(students));
+                
+                console.log('Data saved to localStorage');
+                
+                // Close modal and update dashboard
+                closeActivityModal();
+                updateDashboard();
+                
+                // Show success message
+                const gradeText = grade === 'm1' ? 'ม.1' : grade === 'm2' ? 'ม.2' : 'ม.3';
+                const studentCount = selectedStudentsForActivity.length || 1;
+                
+                alert(`✅ บันทึกกิจกรรมเรียบร้อยแล้ว!\n\n📋 รายละเอียด:\n• กิจกรรม: ${activity.activity}\n• ระดับชั้น: ${gradeText}\n• วันที่: ${activityDate}\n• จำนวนรายการ: ${studentCount} รายการ\n• คะแนน: ${calculatedTotal}/100\n\n🎯 ข้อมูลถูกบันทึกในแท็บ "บันทึกกิจกรรม" แล้ว`);
+                
+                return true;
+                
+            } catch (error) {
+                console.error('Error saving activity:', error);
+                alert('❌ เกิดข้อผิดพลาดในการบันทึกข้อมูล\n\nรายละเอียดข้อผิดพลาด: ' + error.message + '\n\nกรุณาลองใหม่อีกครั้ง หรือรีเฟรชหน้าเว็บ');
+                return false;
+            }
+        }
+
+        function getRubricScores() {
+            const rubricItems = document.querySelectorAll('[id^="rubric_"]');
+            const scores = [];
+            
+            if (rubricItems.length === 0) {
+                // Return default scores if no rubric items found
+                return [
+                    { criteria: 'การเข้าร่วมกิจกรรม', score: 0, maxScore: 20 },
+                    { criteria: 'ความตั้งใจและความพยายาม', score: 0, maxScore: 20 },
+                    { criteria: 'การทำงานร่วมกับผู้อื่น', score: 0, maxScore: 20 },
+                    { criteria: 'ความเข้าใจในเนื้อหา', score: 0, maxScore: 20 },
+                    { criteria: 'การปฏิบัติตามกฎระเบียบ', score: 0, maxScore: 20 }
+                ];
+            }
+            
+            rubricItems.forEach((item, index) => {
+                try {
+                    const rubricContainer = item.closest('.rubric-item');
+                    const criteriaElement = rubricContainer ? rubricContainer.querySelector('.text-gray-700') : null;
+                    const criteriaText = criteriaElement ? criteriaElement.textContent.trim() : `เกณฑ์ที่ ${index + 1}`;
+                    
+                    scores.push({
+                        criteria: criteriaText,
+                        score: parseInt(item.value) || 0,
+                        maxScore: parseInt(item.max) || 20
+                    });
+                } catch (error) {
+                    console.warn('Error getting rubric score for item', index, error);
+                    scores.push({
+                        criteria: `เกณฑ์ที่ ${index + 1}`,
+                        score: parseInt(item.value) || 0,
+                        maxScore: 20
+                    });
+                }
+            });
+            
             return scores;
         }
+
+        // Signature functionality
         function openSignaturePad() {
             const canvas = document.getElementById('signatureCanvas');
             const pad = document.querySelector('.signature-pad');
+            
             canvas.classList.remove('hidden');
             pad.classList.add('hidden');
+            
+            // Initialize canvas
             const ctx = canvas.getContext('2d');
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
+            
             let isDrawing = false;
-            const start = (e) => {
+            
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('touchstart', startDrawing);
+            canvas.addEventListener('touchmove', draw);
+            canvas.addEventListener('touchend', stopDrawing);
+            
+            function startDrawing(e) {
                 isDrawing = true;
-                const pos = getPos(e);
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
                 ctx.beginPath();
-                ctx.moveTo(pos.x, pos.y);
-            };
-            const draw = (e) => {
+                ctx.moveTo(x, y);
+            }
+            
+            function draw(e) {
                 if (!isDrawing) return;
                 e.preventDefault();
-                const pos = getPos(e);
-                ctx.lineTo(pos.x, pos.y);
-                ctx.stroke();
-            };
-            const stop = () => { isDrawing = false; };
-            const getPos = (e) => {
                 const rect = canvas.getBoundingClientRect();
-                return { x: (e.clientX || e.touches[0].clientX) - rect.left, y: (e.clientY || e.touches[0].clientY) - rect.top };
-            };
-            ['mousedown', 'touchstart'].forEach(e => canvas.addEventListener(e, start));
-            ['mousemove', 'touchmove'].forEach(e => canvas.addEventListener(e, draw));
-            ['mouseup', 'touchend'].forEach(e => canvas.addEventListener(e, stop));
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+            
+            function stopDrawing() {
+                isDrawing = false;
+            }
         }
+
         function clearSignature() {
             const canvas = document.getElementById('signatureCanvas');
-            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             currentSignature = null;
         }
+
         function saveSignature() {
-            currentSignature = document.getElementById('signatureCanvas').toDataURL();
+            const canvas = document.getElementById('signatureCanvas');
+            currentSignature = canvas.toDataURL();
+            
             const pad = document.querySelector('.signature-pad');
-            pad.innerHTML = `<div class="text-center text-green-600"><svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><p class="text-sm">ลายเซ็นถูกบันทึกแล้ว</p></div>`;
-            document.getElementById('signatureCanvas').classList.add('hidden');
+            pad.innerHTML = `
+                <div class="text-center text-green-600">
+                    <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <p class="text-sm">ลายเซ็นถูกบันทึกแล้ว</p>
+                </div>
+            `;
+            
+            canvas.classList.add('hidden');
             pad.classList.remove('hidden');
         }
+
+        // Dashboard updates
         function updateDashboard() {
             document.getElementById('totalStudents').textContent = students.length;
-            document.getElementById('m1Stats').textContent = `${students.filter(s => s.grade === 'm1').length} คน`;
-            document.getElementById('m2Stats').textContent = `${students.filter(s => s.grade === 'm2').length} คน`;
-            document.getElementById('m3Stats').textContent = `${students.filter(s => s.grade === 'm3').length} คน`;
-            document.getElementById('todayAttendance').textContent = activities.length;
-            const uniqueActivities = [...new Set(activities.map(a => a.activityName))];
-            document.getElementById('todayActivities').textContent = uniqueActivities.length;
+            
+            // Count by grade
+            const m1Count = students.filter(s => s.grade === 'm1').length;
+            const m2Count = students.filter(s => s.grade === 'm2').length;
+            const m3Count = students.filter(s => s.grade === 'm3').length;
+            
+            document.getElementById('m1Stats').textContent = `${m1Count} คน`;
+            document.getElementById('m2Stats').textContent = `${m2Count} คน`;
+            document.getElementById('m3Stats').textContent = `${m3Count} คน`;
+            
+            // Calculate average score
             if (activities.length > 0) {
                 const totalScore = activities.reduce((sum, act) => sum + parseInt(act.totalScore || 0), 0);
-                document.getElementById('averageScore').textContent = (totalScore / activities.length).toFixed(1);
-            } else {
-                document.getElementById('averageScore').textContent = '0';
+                const avgScore = (totalScore / activities.length).toFixed(1);
+                document.getElementById('averageScore').textContent = avgScore;
             }
+            
+            document.getElementById('todayAttendance').textContent = activities.length;
         }
+
         function renderRecordsList() {
             const container = document.getElementById('recordsList');
+            
             if (activities.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-500 py-8">ยังไม่มีการบันทึกกิจกรรม</p>'; return;
+                container.innerHTML = '<p class="text-center text-gray-500 py-8">ยังไม่มีการบันทึกกิจกรรม</p>';
+                return;
             }
+            
             let html = '';
             activities.slice().reverse().forEach(record => {
                 const gradeText = record.grade === 'm1' ? 'ม.1' : record.grade === 'm2' ? 'ม.2' : 'ม.3';
-                const gradeColors = { excellent: 'text-green-600', good: 'text-blue-600', fair: 'text-yellow-600', poor: 'text-red-600' };
-                html += `<div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 card-shadow"><div class="flex items-start justify-between mb-3"><div><h4 class="font-semibold text-gray-800">${record.activityName}</h4><p class="text-sm text-purple-600">${gradeText} • ${record.time} • ${record.date}</p>${record.studentId ? `<div class="flex items-center space-x-2 mt-1"><span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">👤</span><span class="text-sm text-gray-700">${record.studentName}</span><span class="text-xs text-gray-500">กอง ${record.studentGroup} หมู่ ${record.studentUnit}</span></div>` : ''}</div><div class="text-right"><p class="text-lg font-bold ${gradeColors[record.gradeLevel] || 'text-gray-600'}">${record.totalScore}/100</p><p class="text-xs text-gray-500">${new Date(record.timestamp).toLocaleString('th-TH')}</p></div></div>${record.comments ? `<div class="bg-blue-50 rounded-lg p-3 mb-3"><p class="text-sm text-blue-800"><strong>ความคิดเห็น:</strong> ${record.comments}</p></div>` : ''}${record.supervisorNotes ? `<div class="bg-green-50 rounded-lg p-3 mb-3"><p class="text-sm text-green-800"><strong>หมายเหตุผู้กำกับ:</strong> ${record.supervisorNotes}</p></div>` : ''}${record.signature ? `<div class="flex items-center space-x-2 text-sm text-gray-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg><span>มีลายเซ็นผู้กำกับ</span></div>` : ''}</div>`;
+                const gradeColor = record.gradeLevel === 'excellent' ? 'text-green-600' : 
+                                 record.gradeLevel === 'good' ? 'text-blue-600' : 
+                                 record.gradeLevel === 'fair' ? 'text-yellow-600' : 'text-red-600';
+                
+                html += `
+                    <div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 card-shadow">
+                        <div class="flex items-start justify-between mb-3">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">${record.activityName}</h4>
+                                <p class="text-sm text-purple-600">${gradeText} • ${record.time} • ${record.date}</p>
+                                ${record.studentName ? `
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">👤</span>
+                                        <span class="text-sm text-gray-700">${record.studentName}</span>
+                                        <span class="text-xs text-gray-500">กอง ${record.studentGroup} หมู่ ${record.studentUnit}</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div class="text-right">
+                                <p class="text-lg font-bold ${gradeColor}">${record.totalScore}/100</p>
+                                <p class="text-xs text-gray-500">${new Date(record.timestamp).toLocaleString('th-TH')}</p>
+                            </div>
+                        </div>
+                        
+                        ${record.comments ? `
+                            <div class="bg-blue-50 rounded-lg p-3 mb-3">
+                                <p class="text-sm text-blue-800"><strong>ความคิดเห็น:</strong> ${record.comments}</p>
+                            </div>
+                        ` : ''}
+                        
+                        ${record.supervisorNotes ? `
+                            <div class="bg-green-50 rounded-lg p-3 mb-3">
+                                <p class="text-sm text-green-800"><strong>หมายเหตุผู้กำกับ:</strong> ${record.supervisorNotes}</p>
+                            </div>
+                        ` : ''}
+                        
+                        ${record.signature ? `
+                            <div class="flex items-center space-x-2 text-sm text-gray-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                </svg>
+                                <span>มีลายเซ็นผู้กำกับ</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
             });
+            
             container.innerHTML = html;
         }
+
+        // Google Sheets integration (placeholder)
+        function syncToGoogleSheets() {
+            // This would integrate with Google Sheets API
+            // For now, we'll just show the data structure that would be sent
+            const data = {
+                students: students,
+                activities: activities,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('Data to sync to Google Sheets:', data);
+            alert('ข้อมูลพร้อมส่งไปยัง Google Sheets (ต้องตั้งค่า API Key)');
+        }
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987c0b31363d9d24',t:'MTc1OTMyMjU4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
